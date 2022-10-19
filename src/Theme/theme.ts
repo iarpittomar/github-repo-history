@@ -126,7 +126,7 @@ const customTheme = extendTheme({
     default: '300ms',
   },
   components: {
-    NumberInput: {
+    Input: {
       baseStyle: {
         field: {
           color: 'primary.500',
