@@ -1,5 +1,5 @@
 import React from 'react';
-import { VStack, Text, Box } from '@chakra-ui/react';
+import { VStack, Text, Box, Alert, AlertIcon } from '@chakra-ui/react';
 import GitHistorySkeleton from '../../Components/GitHistorySkeleton';
 import InfoBlock from '../InfoBlock';
 import { useGitHistoryContext } from '../../Context/GitHistoryContext';
@@ -10,12 +10,17 @@ const GithubCommitHistory = () => {
   return (
     <React.Fragment>
       <InfoBlock />
+      <Alert status='info' mt='2rem'>
+        <AlertIcon />
+        By default, We are showning the data for this project itself. If you
+        want to get data for your repos, please enter the details above.
+      </Alert>
       <Box
         border='1px solid'
         borderColor='gray.200'
         borderRadius='0.4rem'
         p='2rem'
-        mt='2rem'
+        mt='1rem'
         h='70vh'
         overflow='scroll'
       >
