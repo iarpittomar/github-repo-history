@@ -4,7 +4,7 @@ import React from 'react';
 interface IInputBox {
   label: string;
   value: string;
-  handleChange: () => string;
+  handleChange: React.ChangeEventHandler<HTMLInputElement>;
 }
 
 const InputBox: React.FC<IInputBox> = ({ label, value, handleChange }) => {

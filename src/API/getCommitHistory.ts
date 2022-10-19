@@ -1,17 +1,21 @@
 import { Octokit } from '@octokit/core';
 
-export const getCommmitHistory = async () => {
+export const getCommmitHistory = async (
+  accessToken: string,
+  repo?: string,
+  owner?: string
+) => {
   const octokit = new Octokit({
-    auth: '',
+    auth: accessToken,
   });
 
-  console.log(octokit);
-
   const response = await octokit.request(
-    'GET /repos/iarpittomar/github-repo-history/commits',
+    `GET /repos/${owner || 'iarpittomar'}/${
+      repo || 'github-repo-history'
+    }/commits`,
     {
-      owner: 'iarpittomar',
-      repo: 'github-repo-history',
+      owner: owner || 'iarpittomar',
+      repo: repo || 'github-repo-history',
     }
   );
   return response;

@@ -1,53 +1,23 @@
 import React from 'react';
-import { VStack, Text } from '@chakra-ui/react';
-import { getCommmitHistory } from '../../API/getCommitHistory';
+import { VStack, Text, Box } from '@chakra-ui/react';
 import GitHistorySkeleton from '../../Components/GitHistorySkeleton';
 import InfoBlock from '../InfoBlock';
-
-interface IGithubHistory {
-  commit: {
-    message: string;
-    committer: {
-      email: string;
-      name: string;
-      date: string;
-    };
-  };
-}
+import { useGitHistoryContext } from '../../Context/GitHistoryContext';
 
 const GithubCommitHistory = () => {
-  const [githubHistory, setGithubHistory] = React.useState<IGithubHistory[]>(
-    []
-  );
-  const [isLoading, setIsLoading] = React.useState(true);
-
-  const fetchCommitHistory = () => {
-    getCommmitHistory()
-      .then((resp) => {
-        setGithubHistory(resp.data);
-        setIsLoading(false);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
-
-  React.useEffect(() => {
-    fetchCommitHistory();
-  }, []);
+  const { isLoading, githubHistory } = useGitHistoryContext();
 
   return (
     <React.Fragment>
       <InfoBlock />
-      <VStack
+      <Box
         border='1px solid'
         borderColor='gray.200'
         borderRadius='0.4rem'
         p='2rem'
-        justifyContent='center'
-        alignItems='flex-start'
-        spacing={8}
         mt='2rem'
+        h='70vh'
+        overflow='scroll'
       >
         {isLoading ? (
           <GitHistorySkeleton isLoaded={!isLoading} />
@@ -63,6 +33,7 @@ const GithubCommitHistory = () => {
                 borderRadius='0.4rem'
                 alignItems='flex-start'
                 boxShadow='2px 2px 5px rgba(0,0,0,0.4)'
+                mb='2rem'
               >
                 <Text color='secondary.500' fontSize='1.6rem'>
                   {item.commit.message}
@@ -75,7 +46,7 @@ const GithubCommitHistory = () => {
             );
           })
         )}
-      </VStack>
+      </Box>
     </React.Fragment>
   );
 };

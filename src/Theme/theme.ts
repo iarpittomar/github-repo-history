@@ -1,5 +1,6 @@
 import { extendTheme, ThemeConfig } from '@chakra-ui/react';
 import theme from '@chakra-ui/theme';
+import { ChakraProps } from '@chakra-ui/system';
 
 const config: ThemeConfig = {
   initialColorMode: 'light',
@@ -126,6 +127,54 @@ const customTheme = extendTheme({
     default: '300ms',
   },
   components: {
+    Button: {
+      baseStyle: {},
+      // styles for different sizes ("sm", "md", "lg")
+      sizes: {
+        sm: {
+          py: '1.5rem',
+          px: '1.5rem',
+          fontSize: '1.2rem',
+        },
+        md: {
+          py: '2rem',
+          px: '2rem',
+          fontSize: '1.4rem',
+        },
+        lg: {
+          py: '2.5rem',
+          px: '2.5rem',
+          fontSize: '1.6rem',
+        },
+      },
+      // styles for different visual variants ("outline", "solid")
+      variants: {
+        primary: {
+          bg: 'primary.300',
+          color: 'white',
+          boxShadow: 'md',
+          _hover: (props: ChakraProps) => ({
+            bgColor: 'primary.400',
+            boxShadow: 'md',
+          }),
+        },
+        secondary: {
+          bg: 'secondary.500',
+          color: 'white',
+          boxShadow: 'md',
+          outline: 'none',
+          _hover: (props: ChakraProps) => ({
+            bg: 'secondary.200',
+            boxShadow: 'md',
+          }),
+        },
+      },
+      // default values for `size` and `variant`
+      defaultProps: {
+        variant: 'primary',
+        size: 'md',
+      },
+    },
     Input: {
       baseStyle: {
         field: {

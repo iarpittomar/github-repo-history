@@ -9,7 +9,7 @@ const App: React.FC = () => {
       <Box
         h='100vh'
         w='100vw'
-        p={['2rem', '2rem', '4rem 8rem', '6rem 12rem', '12rem 24rem']}
+        p={['2rem', '2rem', '4rem 8rem', '6rem 12rem', '6rem 12rem']}
       >
         <GithubCommitHistory />
       </Box>
