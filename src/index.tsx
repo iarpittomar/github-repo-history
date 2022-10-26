@@ -5,6 +5,7 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import customTheme from './Theme/theme';
 import { ChakraProvider } from '@chakra-ui/react';
+import ErrorBoundary from './ErrorBoundary/ErrorBoundary';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -12,7 +13,9 @@ const root = ReactDOM.createRoot(
 root.render(
   <ChakraProvider theme={customTheme} resetCSS>
     <React.StrictMode>
-      <App />
+      <ErrorBoundary>
+        <App />
+      </ErrorBoundary>
     </React.StrictMode>
   </ChakraProvider>
 );
