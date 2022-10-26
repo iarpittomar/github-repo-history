@@ -1,23 +1,9 @@
 import React from 'react';
 import { getCommmitHistory } from '../API/getCommitHistory';
-
-interface IGithubHistory {
-  commit: {
-    message: string;
-    committer: {
-      email: string;
-      name: string;
-      date: string;
-    };
-  };
-}
-interface IGitHistoryContext {
-  setAccessToken: React.Dispatch<React.SetStateAction<string>>;
-  accessToken: string;
-  fetchData: (accessToken: string, repo?: string, owner?: string) => void;
-  isLoading: boolean;
-  githubHistory: IGithubHistory[];
-}
+import {
+  IGitHistoryContext,
+  IGithubHistory,
+} from '../interface/IGitHistoryContext';
 
 const GitHistoryContext = React.createContext<IGitHistoryContext | null>(null);
 
@@ -40,23 +26,44 @@ const GitHistoryProvider = ({ ...props }) => {
   );
 
   const [isLoading, setIsLoading] = React.useState(true);
+  const [owner, setOwner] = React.useState('');
+  const [repo, setRepo] = React.useState('');
+
+  const [timer, setTimer] = React.useState(30);
 
   const fetchData = React.useCallback(
     (accessToken?: string, repo?: string, owner?: string) => {
+      setIsLoading(true);
       if (accessToken) {
         window.localStorage.setItem('personalAccessToken', accessToken);
         getCommmitHistory(accessToken, repo, owner)
           .then((resp) => {
             setGithubHistory(resp.data);
             setIsLoading(false);
+            setTimer(30);
           })
-          .catch((err) => {
-            console.log(err);
-          });
+          .catch((err) => {});
       }
     },
     []
   );
+
+  React.useEffect(() => {
+    let timerInterval: any;
+    if (accessToken) {
+      timerInterval = setInterval(() => {
+        if (timer > 0) {
+          setTimer(timer - 1);
+        } else {
+          fetchData(accessToken, repo, owner);
+        }
+      }, 1000);
+    }
+
+    return () => {
+      clearInterval(timerInterval);
+    };
+  }, [accessToken, fetchData, owner, repo, timer]);
 
   React.useEffect(() => {
     fetchData(accessToken);
@@ -71,6 +78,11 @@ const GitHistoryProvider = ({ ...props }) => {
         fetchData,
         isLoading,
         githubHistory,
+        timer,
+        owner,
+        repo,
+        setOwner,
+        setRepo,
       }}
     >
       {props.children}

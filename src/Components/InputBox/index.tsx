@@ -1,11 +1,6 @@
 import { Text, Input, VStack } from '@chakra-ui/react';
 import React from 'react';
-
-interface IInputBox {
-  label: string;
-  value: string;
-  handleChange: React.ChangeEventHandler<HTMLInputElement>;
-}
+import { IInputBox } from '../../interface/IInputBox';
 
 const InputBox: React.FC<IInputBox> = ({ label, value, handleChange }) => {
   return (

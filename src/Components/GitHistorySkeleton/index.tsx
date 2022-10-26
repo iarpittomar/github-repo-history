@@ -1,9 +1,6 @@
 import React from 'react';
 import { Stack, Skeleton } from '@chakra-ui/react';
-
-interface IGitHistorySkeleton {
-  isLoaded: boolean;
-}
+import { IGitHistorySkeleton } from '../../interface/IGitHistorySkeleton';
 
 const GitHistorySkeleton: React.FC<IGitHistorySkeleton> = ({ isLoaded }) => {
   return (

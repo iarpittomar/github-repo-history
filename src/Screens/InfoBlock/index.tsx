@@ -4,9 +4,16 @@ import InputBox from '../../Components/InputBox';
 import { useGitHistoryContext } from '../../Context/GitHistoryContext';
 
 const InfoBlock: React.FC = () => {
-  const { setAccessToken, accessToken, fetchData } = useGitHistoryContext();
-  const [owner, setOwner] = React.useState('');
-  const [repo, setRepo] = React.useState('');
+  const {
+    setAccessToken,
+    accessToken,
+    fetchData,
+    setOwner,
+    setRepo,
+    repo,
+    owner,
+    timer,
+  } = useGitHistoryContext();
 
   const handleTokenChange = (e: any) => {
     setAccessToken(e.target.value);
@@ -44,7 +51,10 @@ const InfoBlock: React.FC = () => {
         handleChange={handleRepoChange}
       />
       <Button size='md' variant='primary' onClick={handleFetchData}>
-        Fetch Data
+        Refresh Now
+      </Button>
+      <Button size='md' variant='solid' colorScheme='gray'>
+        Reloading in {timer}s
       </Button>
     </HStack>
   );
